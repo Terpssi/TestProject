@@ -91,7 +91,9 @@
 
   delAllButton.addEventListener('click', () => {
     localStorage.clear();
-    renderPage();
+    Array.from(tbody.children).forEach((item) => {
+      item.parentNode.removeChild(item);
+    })
   })
 
 })();
