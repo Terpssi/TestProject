@@ -17,14 +17,14 @@
   var jsonArray = JSON.parse(dataJson.dataset.json); //массив с объектами json
 
   if (localStorage.length === 0) { //при первой загрузке страницы в локал записываются данные из json
-    jsonArray.forEach(function(item, i) {
+    jsonArray.forEach(function (item, i) {
       localStorage.setItem(item.id, JSON.stringify(item));
       localStorage.setItem('count', i + 2); //счетчик записанных в локал данных на (1 больше количества)
     })
   }
   renderPage(); //смотрит какие данные есть в локал и отрисовывает их в таблицу
 
-  tbody.addEventListener('click', function(event) {
+  tbody.addEventListener('click', function (event) {
 
     var row = event.target.parentNode;
 
@@ -44,7 +44,7 @@
 
   });
 
-  form.addEventListener('click', function(event) {
+  form.addEventListener('click', function (event) {
     event.preventDefault();
 
     if (event.target.id === 'close_button') { //закрыть всплывающее окно
@@ -69,8 +69,10 @@
           localStorage.removeItem(objNewData.id); //удаляем из локал этот объект
           updateLocalStorage(objNewData); //меняем содержимое локал
           var row = document.querySelector('[data-id = \"' + objNewData.id + '\"]'); //находим и меняем редактируемую строчку
-          Array.prototype.slice.call(row.children).forEach(function(item) {
-            item.textContent = objNewData[item.className]
+          Array.prototype.slice.call(row.children).forEach(function (item) {
+            if (item.tagName === 'TD') {
+              item.textContent = objNewData[item.className];
+            }
           })
         }
       }
@@ -78,7 +80,7 @@
   });
 
 
-  addButton.addEventListener('click', function() { //при нажатии "добавить" открывается окно добавления данных. Строке присваивается новый id: значение счетчика
+  addButton.addEventListener('click', function () { //при нажатии "добавить" открывается окно добавления данных. Строке присваивается новый id: значение счетчика
     popup.classList.remove('hidden');
     h3popup.textContent = "Введите новые данные";
     fullName.dataset.id = Number(localStorage.getItem('count'));
@@ -87,9 +89,9 @@
     address.value = '';
   });
 
-  delAllButton.addEventListener('click', function() { //при нажатии "Очистить хранилище", из локал и таблицы удаляются все данные
+  delAllButton.addEventListener('click', function () { //при нажатии "Очистить хранилище", из локал и таблицы удаляются все данные
     localStorage.clear();
-    Array.prototype.slice.call(tbody.children).forEach(function(item) {
+    Array.prototype.slice.call(tbody.children).forEach(function (item) {
       item.parentNode.removeChild(item);
     })
   })
@@ -107,7 +109,7 @@ function createNewRow(objData) { //создаем новую строку с д�
   }
   var rowDelButton = document.createElement('button'); //создаем кнопку удаления
   rowDelButton.classList.add('deleteBut');
-  rowDelButton.textContent = 'lf';
+  rowDelButton.textContent = 'Удалить';
   newRow.appendChild(rowDelButton);
   tbody.appendChild(newRow);
 }
@@ -117,13 +119,13 @@ function renderPage() { //отрисовывает таблицу исходя �
   var keys = Object.keys(localStorage); //получаем массив с ключами из локал
   keys.splice(keys.indexOf('count'), 1); //удаляем оттуда счетчик
   var index = keys.length;
-  keys.sort(function(a, b) {
+  keys.sort(function (a, b) {
     return (a - b);
   });
   while (index--) {
     values.unshift(localStorage.getItem(keys[index])); //массив с объектами из локал
   }
-  values.forEach(function(item) {
+  values.forEach(function (item) {
     createNewRow(JSON.parse(item)); //отрисовываем таблицу.
   });
 }
