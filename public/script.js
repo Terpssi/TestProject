@@ -2,77 +2,75 @@
 
 (function () {
 
-  let dataJson = document.getElementById('json'); //span с json данными
-  let tbody = document.getElementById('tbody');
-  let popup = document.getElementById('popup');
-  let fullName = document.getElementById('full_name');
-  let phone = document.getElementById('phone');
-  let address = document.getElementById('address');
-  let form = document.getElementById('form');
-  let addButton = document.getElementById('add_button');
-  let delAllButton = document.getElementById('deleteAll_button');
-  let h3popup = document.getElementById('popup_head');
+  var dataJson = document.getElementById('json'); //span с json данными
+  var tbody = document.getElementById('tbody');
+  var popup = document.getElementById('popup'); //всплывающее окно
+  var h3popup = document.getElementById('popup_head'); //заголовок всплывашки
+  var fullName = document.getElementById('full_name');
+  var phone = document.getElementById('phone');
+  var address = document.getElementById('address');
+  var form = document.getElementById('form');
+  var addButton = document.getElementById('add_button'); //кнопка Добавить
+  var delAllButton = document.getElementById('deleteAll_button'); //кнопка Очистить хранилище
 
-  let jsonArray = JSON.parse(dataJson.dataset.json); //массив с объектами json
+
+  var jsonArray = JSON.parse(dataJson.dataset.json); //массив с объектами json
 
   if (localStorage.length === 0) { //при первой загрузке страницы в локал записываются данные из json
-    jsonArray.forEach((item, i) => {
-      localStorage.setItem(item.id, JSON.stringify(item)); //записываем объекты в локал
-      localStorage.setItem('count', i + 1); //счетчик количества записанных в локал данных ???
+    jsonArray.forEach(function(item, i) {
+      localStorage.setItem(item.id, JSON.stringify(item));
+      localStorage.setItem('count', i + 2); //счетчик записанных в локал данных на (1 больше количества)
     })
   }
   renderPage(); //смотрит какие данные есть в локал и отрисовывает их в таблицу
 
-  tbody.addEventListener('click', (event) => { //при нажатии на строку в таблице
-    let row = event.target.parentNode;
-    console.log(row.dataset.id);
-    if (event.target.tagName === "BUTTON") {
+  tbody.addEventListener('click', function(event) {
+
+    var row = event.target.parentNode;
+
+    if (event.target.tagName === "BUTTON") { //кнопка "удалить" в строке
       localStorage.removeItem(row.dataset.id);
-      console.log(row);
       row.parentNode.removeChild(row);
-
     } else {
-      popup.classList.remove('hidden'); //открывается всплывающее окно
+      //При нажатии на строку открывается окно редактирования данных
+      popup.classList.remove('hidden'); //
       h3popup.textContent = "Отредактируйте данные";
-
-      let obj = JSON.parse(localStorage.getItem(row.dataset.id)); //из локал достаются данные по Id
-      fullName.value = obj.full_name; // и вставляются в строки
+      var localDataObj = JSON.parse(localStorage.getItem(row.dataset.id)); //из локал по id достается объект с данными
       fullName.dataset.id = row.dataset.id;
-      phone.value = obj.phone;
-      address.value = obj.address;
+      fullName.value = localDataObj.full_name;
+      phone.value = localDataObj.phone;
+      address.value = localDataObj.address;
     }
 
   });
 
-  form.addEventListener('click', (event) => { //делегирование
-    event.preventDefault(); //включенно временно или нет
+  form.addEventListener('click', function(event) {
+    event.preventDefault();
 
-    if (event.target.id === 'close_button') { //если нажата кнопка закрыть
-      popup.classList.add('hidden'); //закрыть всплывающее окно
+    if (event.target.id === 'close_button') { //закрыть всплывающее окно
+      popup.classList.add('hidden');
     }
-    if (event.target.id === 'ok_button') { //при нажатии на кнопку ок
+
+    if (event.target.id === 'ok_button') {
       if (fullName.value.trim() === '' || phone.value.trim() === '' || address.value.trim() === '') { //если заполнены не все поля
-        event.preventDefault();
         h3popup.textContent = "Все поля должны быть заполнены";
       } else {
-        let newObj = {  //создается новый объект со всеми необходимыми данными
+        var objNewData = {  //создается новый объект со всеми необходимыми данными
           "id": fullName.dataset.id,
           "full_name": fullName.value,
-          "phone": phone.value,
-          "address": address.value
+          "address": address.value,
+          "phone": phone.value
         };
-        if (localStorage.getItem(fullName.dataset.id) === null) { //проверяем есть ли в локал больница с таким id
-          console.log('новый');
-          updateLocalStorage(newObj); //меняем содержимое локал
-          createNewRow(newObj); //создаем новую строку в конце
-          localStorage.setItem('count', Number(localStorage.getItem('count')) + 1); //счетчик в локал менется на новое значение
+        if (localStorage.getItem(fullName.dataset.id) === null) { //если в локал нет данных с таким id..
+          updateLocalStorage(objNewData); //меняем содержимое локал
+          createNewRow(objNewData); //создаем новую строку в конце
+          localStorage.setItem('count', Number(localStorage.getItem('count')) + 1); //счетчик в локал увеличивается
         } else {
-
-          localStorage.removeItem(newObj.id); //удаляем из локал этот объект
-          updateLocalStorage(newObj); //меняем содержимое локал
-          let row = document.querySelector('[data-id = \"' + newObj.id + '\"]'); //находим редактируемую строчку
-          Array.from(row.children).forEach((item) => {
-            item.textContent = newObj[item.className]
+          localStorage.removeItem(objNewData.id); //удаляем из локал этот объект
+          updateLocalStorage(objNewData); //меняем содержимое локал
+          var row = document.querySelector('[data-id = \"' + objNewData.id + '\"]'); //находим и меняем редактируемую строчку
+          Array.prototype.slice.call(row.children).forEach(function(item) {
+            item.textContent = objNewData[item.className]
           })
         }
       }
@@ -80,63 +78,57 @@
   });
 
 
-  addButton.addEventListener('click', () => { //кнопка добавить
+  addButton.addEventListener('click', function() { //при нажатии "добавить" открывается окно добавления данных. Строке присваивается новый id: значение счетчика
     popup.classList.remove('hidden');
     h3popup.textContent = "Введите новые данные";
-    fullName.dataset.id = Number(localStorage.getItem('count')) + 1; //при нажатии "добавить" строке присваивается новый id. значение счетчика в локал + 1
+    fullName.dataset.id = Number(localStorage.getItem('count'));
     fullName.value = '';
-    phone.value = ''; //поменять работу счетчика
+    phone.value = '';
     address.value = '';
   });
 
-  delAllButton.addEventListener('click', () => {
+  delAllButton.addEventListener('click', function() { //при нажатии "Очистить хранилище", из локал и таблицы удаляются все данные
     localStorage.clear();
-    Array.from(tbody.children).forEach((item) => {
+    Array.prototype.slice.call(tbody.children).forEach(function(item) {
       item.parentNode.removeChild(item);
     })
   })
 
 })();
 
-function createNewRow(obj) { //создаем новую строку с данными и добавляем ее таблицу
-  let elemTr = document.createElement('tr');
-  elemTr.setAttribute('data-id', obj.id);
-  createNewTd("full_name", obj.full_name, elemTr);
-  createNewTd("phone", obj.phone, elemTr);
-  createNewTd("address", obj.address, elemTr);
-  createDelButton(elemTr);
-  tbody.append(elemTr);
-}
-
-function createNewTd(classAdd, text, tr) { //для создания ячеек в строке.
-  let elemTd = document.createElement('td');
-  elemTd.classList.add(classAdd);
-  elemTd.textContent = text;
-  tr.append(elemTd);
-}
-
-function createDelButton(tr) {
-  let elem = document.createElement('button');
-  elem.classList.add('deleteBut');
-  tr.append(elem);
-}
-
-function renderPage() {
-  let values = [];
-  let keys = Object.keys(localStorage); //получаем массив с ключами из локал
-  keys.splice(keys.indexOf('count'), 1); //удаляем оттуда счетчик
-  let i = keys.length;
-  keys.sort((a, b) => (a - b));
-  while (i--) {
-    values.unshift(localStorage.getItem(keys[i])); //массив с объектами из локал
+function createNewRow(objData) { //создаем новую строку с данными и добавляем ее таблицу
+  var newRow = document.createElement('tr');
+  newRow.setAttribute('data-id', objData.id);
+  for (var j = 1; j < Object.keys(objData).length; j++) { //создаем столбцы
+    var elemTd = document.createElement('td');
+    elemTd.classList.add(Object.keys(objData)[j]);
+    elemTd.textContent = objData[Object.keys(objData)[j]];
+    newRow.appendChild(elemTd);
   }
-  values.forEach((item) => {
+  var rowDelButton = document.createElement('button'); //создаем кнопку удаления
+  rowDelButton.classList.add('deleteBut');
+  rowDelButton.textContent = 'lf';
+  newRow.appendChild(rowDelButton);
+  tbody.appendChild(newRow);
+}
+
+function renderPage() { //отрисовывает таблицу исходя из данных в локал
+  var values = [];
+  var keys = Object.keys(localStorage); //получаем массив с ключами из локал
+  keys.splice(keys.indexOf('count'), 1); //удаляем оттуда счетчик
+  var index = keys.length;
+  keys.sort(function(a, b) {
+    return (a - b);
+  });
+  while (index--) {
+    values.unshift(localStorage.getItem(keys[index])); //массив с объектами из локал
+  }
+  values.forEach(function(item) {
     createNewRow(JSON.parse(item)); //отрисовываем таблицу.
   });
 }
 
-function updateLocalStorage(obj) {
-  localStorage.setItem(obj.id, JSON.stringify(obj)); //этот объект загружается в локал
-
+function updateLocalStorage(obj) { //загружает в локал новый объект и закрывает окно
+  localStorage.setItem(obj.id, JSON.stringify(obj));
   popup.classList.add('hidden');
 }

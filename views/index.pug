@@ -8,8 +8,8 @@ block content
         thead
             tr
                 th Наименование
-                th Телефон
                 th Адрес
+                th Телефон
         tbody#tbody
             // each item in hospital
             //     tr(data-id = item.id)
@@ -18,7 +18,7 @@ block content
             //         td.address #{item.address}
         tfoot
             tr
-                th(colspan='6')
+                th#tfoot(colspan='6')
 
     +popupForm
     span#json(data-json = myJson)
