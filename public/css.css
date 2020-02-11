@@ -1,5 +1,5 @@
 body {
-    background-image: url("img/dots.png");
+    background-image: url('/img/dots.png');
 }
 
 table {
@@ -7,15 +7,10 @@ table {
     border-collapse: collapse;
 }
 
-td, th {
+th, tr, td {
     border: 2px solid #59b4e6;
     padding: 10px 15px;
-}
-
-.div {
-    border: 3px solid #59b4e6;
-    border-radius: 5px;
-    margin-bottom: 10px;
+    position: relative;
 }
 
 button {
@@ -66,4 +61,16 @@ tbody tr:hover {
 
 .error {
     outline: 3px solid red;
+}
+
+.deleteBut {
+    content: '';
+    position: absolute;
+    background-image: url("/img/trash.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    right: 0;
+    top: 0;
 }
