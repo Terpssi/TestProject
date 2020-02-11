@@ -1,0 +1,23 @@
+extends layout.pug
+include lpu.pug
+
+block content
+    button#add_button Добавить
+    table.table
+        thead
+            tr
+                th Наименование
+                th Телефон
+                th Адрес
+        tbody#tbody
+            // each item in hospital
+            //     tr(data-id = item.id)
+            //         td.full_name #{item.full_name}
+            //         td.phone #{item.phone}
+            //         td.address #{item.address}
+        tfoot
+            tr
+                th(colspan='6')
+
+    +popupForm
+    span#json(data-json = myJson)

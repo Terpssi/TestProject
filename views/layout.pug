@@ -1,0 +1,19 @@
+- var title = 'Список лечебно-профилактических учреждений'
+
+doctype html
+html(lang='en')
+    head
+        link(href='css.css' rel='stylesheet')
+        title #{title}
+    body
+        main
+            h1 #{title}
+            .ui.container
+
+                block content
+
+            block footer
+                footer
+                p © #{new Date().getFullYear()} My Hands
+
+            script(src='script.js')
