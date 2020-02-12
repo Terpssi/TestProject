@@ -63,7 +63,7 @@ thead th:nth-last-child(2) {
 }
 
 thead th:not(:last-of-type) {
-  background-color: lighten($blue, 20%);
+  background-color: lighten($blue, 10%);
 }
 
 tfoot th {
@@ -78,7 +78,8 @@ tr:hover > td {
 
 /* Кнопки */
 
-button {
+button,
+input {
   cursor: pointer;
 }
 
@@ -109,6 +110,55 @@ button {
 }
 
 tr:hover > .deleteButton {
+  //opacity: 0.8;
+  background-color: lighten($yellow, 20%);
+}
+
+.deleteButton:hover {
   opacity: 1;
-  background-color: lighten($yellow, 40%);
+}
+
+/* всплывающее окно */
+
+.hidden {
+  display: none;
+}
+
+#popup_head {
+  font-variant: small-caps;
+  text-align: center;
+  font-size: 1.5em;
+  letter-spacing: 2px;
+}
+
+#popup {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+#popup_window {
+  min-width: 65%;
+  background: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid $green;
+  padding: 1em;
+  border-radius: $roundTable;
+}
+
+#popup_window input {
+  width: 25%;
+  padding: 0.8em;
+  margin: 1em;
+}
+
+.error {
+  box-shadow: $red 0px 0px 20px;
+  color: $red;
 }

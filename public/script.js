@@ -9,7 +9,7 @@
   var fullName = document.getElementById('full_name');
   var phone = document.getElementById('phone');
   var address = document.getElementById('address');
-  var form = document.getElementById('form');
+  var popupWindow = document.getElementById('popup_window');
   var addButton = document.getElementById('add_button'); //кнопка Добавить
   var delAllButton = document.getElementById('deleteAll_button'); //кнопка Очистить хранилище
 
@@ -44,17 +44,20 @@
 
   });
 
-  form.addEventListener('click', function (event) {
+  popupWindow.addEventListener('click', function (event) {
     event.preventDefault();
 
     if (event.target.id === 'close_button') { //закрыть всплывающее окно
       popup.classList.add('hidden');
+      popupWindow.classList.remove('error')
     }
 
     if (event.target.id === 'ok_button') {
       if (fullName.value.trim() === '' || phone.value.trim() === '' || address.value.trim() === '') { //если заполнены не все поля
         h3popup.textContent = "Все поля должны быть заполнены";
+        popupWindow.classList.add('error');
       } else {
+        popupWindow.classList.remove('error')
         var objNewData = {  //создается новый объект со всеми необходимыми данными
           "id": fullName.dataset.id,
           "full_name": fullName.value,
