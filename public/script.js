@@ -57,7 +57,7 @@
         h3popup.textContent = "Все поля должны быть заполнены";
         popupWindow.classList.add('error');
       } else {
-        popupWindow.classList.remove('error')
+        popupWindow.classList.remove('error');
         var objNewData = {  //создается новый объект со всеми необходимыми данными
           "id": fullName.dataset.id,
           "full_name": fullName.value,
@@ -72,6 +72,7 @@
           localStorage.removeItem(objNewData.id); //удаляем из локал этот объект
           updateLocalStorage(objNewData); //меняем содержимое локал
           var row = document.querySelector('[data-id = \"' + objNewData.id + '\"]'); //находим и меняем редактируемую строчку
+          blinkAnimation(row); //обозначение редактируемой строчки
           Array.prototype.slice.call(row.children).forEach(function (item) {
             if (item.tagName === 'TD') {
               item.textContent = objNewData[item.className];
@@ -114,6 +115,7 @@ function createNewRow(objData) { //создаем новую строку с д�
   rowDelButton.classList.add('deleteButton');
   rowDelButton.title = 'Удалить';
   newRow.appendChild(rowDelButton);
+  blinkAnimation(newRow); //обозначение новой строчки
   tbody.appendChild(newRow);
 }
 
@@ -136,4 +138,11 @@ function renderPage() { //отрисовывает таблицу исходя �
 function updateLocalStorage(obj) { //загружает в локал новый объект и закрывает окно
   localStorage.setItem(obj.id, JSON.stringify(obj));
   popup.classList.add('hidden');
+}
+
+function blinkAnimation(row) { //мигает зеленым
+  row.classList.add('newBlinkRow');
+  setTimeout(function () {
+    row.classList.remove('newBlinkRow')
+  },2000)
 }

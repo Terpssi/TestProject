@@ -61,6 +61,7 @@ tfoot th {
 tr:hover > td {
   background: #e3f4b4;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 /* Кнопки */
@@ -101,6 +102,7 @@ tr:hover > .deleteButton {
 
 .deleteButton:hover {
   opacity: 1;
+  transition: 0.2s;
 }
 
 /* всплывающее окно */
@@ -143,8 +145,22 @@ tr:hover > .deleteButton {
 }
 
 .error {
-  box-shadow: #c22118 0px 0px 20px;
+  box-shadow: #c22118 0 0 50px;
   color: #c22118;
+  transition: 0.4s;
+}
+
+.newBlinkRow > td {
+  animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+  from {
+    background: none;
+  }
+  to {
+    background: #d3ee87;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

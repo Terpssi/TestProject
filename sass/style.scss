@@ -7,6 +7,8 @@ $fontHeader: 2em;
 $fontBody: 16px;
 
 $roundTable: 20px;
+$transition: 0.2s;
+
 
 /* Шрифты */
 
@@ -74,7 +76,9 @@ tfoot th {
 tr:hover > td {
   background: lighten($green, 40%);
   cursor: pointer;
+  transition: 0.2s;
 }
+
 
 /* Кнопки */
 
@@ -90,7 +94,7 @@ input {
   border-radius: 7px;
   background: $blue;
   box-shadow: 0 -3px darken($blue, 10%) inset;
-  transition: 0.2s;
+  transition: $transition;
   margin: 0 0 10px 5px;
 }
 
@@ -110,13 +114,15 @@ input {
 }
 
 tr:hover > .deleteButton {
-  //opacity: 0.8;
   background-color: lighten($yellow, 20%);
 }
 
 .deleteButton:hover {
   opacity: 1;
+  transition: $transition;
 }
+
+
 
 /* всплывающее окно */
 
@@ -158,7 +164,23 @@ tr:hover > .deleteButton {
   margin: 1em;
 }
 
+
+
 .error {
-  box-shadow: $red 0px 0px 20px;
+  box-shadow: $red 0 0 50px;
   color: $red;
+  transition: $transition * 2;
+}
+
+.newBlinkRow > td {
+  animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+  from {
+    background: none;
+  }
+  to {
+    background: lighten($green, 30%);
+  }
 }
