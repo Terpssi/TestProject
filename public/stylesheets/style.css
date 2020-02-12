@@ -1,43 +1,30 @@
-$blue: #59b4e6;
-$green: #95c11b;
-$yellow: #fcd300;
-$red: #c22118;
-
-$fontHeader: 2em;
-$fontBody: 16px;
-
-$roundTable: 20px;
-
+@charset "UTF-8";
 /* Шрифты */
-
 @font-face {
   font-family: UniverseMedium;
   src: url("/fonts/UniversMedium.ttf");
   src: url("/fonts/UniversMedium.woff");
 }
-
 body {
   font-family: UniverseMedium, "Arial", sans-serif;
-  font-size: $fontBody;
-  color: darken($blue, 50%);
+  font-size: 16px;
+  color: #082738;
   background-image: url("/img/dots.png");
 }
 
 .header {
-  font-size: $fontHeader;
+  font-size: 2em;
   text-align: center;
   font-variant: small-caps;
 }
 
 /* таблица */
-
 .container {
   width: 90%;
   margin: auto;
 }
 
 .table {
-  //border-collapse: collapse;
   width: 100%;
   margin: auto;
 }
@@ -45,7 +32,7 @@ body {
 thead th:not(:last-of-type),
 td,
 tfoot th {
-  border: 2px solid lighten($blue, 10%);
+  border: 2px solid #85c8ed;
 }
 
 th,
@@ -55,29 +42,28 @@ td {
 }
 
 thead th:first-child {
-  border-top-left-radius: $roundTable;
+  border-top-left-radius: 20px;
 }
 
 thead th:nth-last-child(2) {
-  border-top-right-radius: $roundTable;
+  border-top-right-radius: 20px;
 }
 
 thead th:not(:last-of-type) {
-  background-color: lighten($blue, 20%);
+  background-color: #b2dcf3;
 }
 
 tfoot th {
-  background-color: lighten($blue, 20%);
-  border-radius: 0 0 $roundTable $roundTable;
+  background-color: #b2dcf3;
+  border-radius: 0 0 20px 20px;
 }
 
 tr:hover > td {
-  background: lighten($green, 40%);
+  background: #e3f4b4;
   cursor: pointer;
 }
 
 /* Кнопки */
-
 button {
   cursor: pointer;
 }
@@ -85,16 +71,16 @@ button {
 .button {
   font-weight: 700;
   color: white;
-  padding: .8em 1em calc(.8em + 2px);
+  padding: 0.8em 1em calc(.8em + 2px);
   border-radius: 7px;
-  background: $blue;
-  box-shadow: 0 -3px darken($blue, 10%) inset;
+  background: #59b4e6;
+  box-shadow: 0 -3px #2da0df inset;
   transition: 0.2s;
   margin: 0 0 10px 5px;
 }
 
 .button:hover {
-  background: darken($blue, 10%);
+  background: #2da0df;
 }
 
 .deleteButton {
@@ -110,5 +96,7 @@ button {
 
 tr:hover > .deleteButton {
   opacity: 1;
-  background-color: lighten($yellow, 40%);
+  background-color: #fff6c9;
 }
+
+/*# sourceMappingURL=style.css.map */

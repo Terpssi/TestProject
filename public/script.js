@@ -108,8 +108,8 @@ function createNewRow(objData) { //создаем новую строку с д�
     newRow.appendChild(elemTd);
   }
   var rowDelButton = document.createElement('button'); //создаем кнопку удаления
-  rowDelButton.classList.add('deleteBut');
-  rowDelButton.textContent = 'Удалить';
+  rowDelButton.classList.add('deleteButton');
+  rowDelButton.title = 'Удалить';
   newRow.appendChild(rowDelButton);
   tbody.appendChild(newRow);
 }

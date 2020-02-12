@@ -2,23 +2,21 @@ extends layout.pug
 include lpu.pug
 
 block content
-    button#add_button Добавить
-    button#deleteAll_button Очистить хранилище
+
     table.table
+        button#add_button.button Добавить
+        button#deleteAll_button.button Очистить хранилище
         thead
             tr
                 th Наименование
                 th Адрес
                 th Телефон
+                th Удалить
         tbody#tbody
-            // each item in hospital
-            //     tr(data-id = item.id)
-            //         td.full_name #{item.full_name}
-            //         td.phone #{item.phone}
-            //         td.address #{item.address}
+
         tfoot
             tr
-                th#tfoot(colspan='6')
+                th#tfoot(colspan='3')
 
     +popupForm
     span#json(data-json = myJson)
