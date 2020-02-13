@@ -29,8 +29,10 @@
     var row = event.target.parentNode;
 
     if (event.target.tagName === "BUTTON") { //кнопка "удалить" в строке
-      localStorage.removeItem(row.dataset.id);
-      row.parentNode.removeChild(row);
+      if (confirm('Вы действительно хотите удалить запись?')) {
+        localStorage.removeItem(row.dataset.id);
+        row.parentNode.removeChild(row);
+      }
     } else {
       //При нажатии на строку открывается окно редактирования данных
       popup.classList.remove('hidden'); //
@@ -68,6 +70,7 @@
           updateLocalStorage(objNewData); //меняем содержимое локал
           createNewRow(objNewData); //создаем новую строку в конце
           localStorage.setItem('count', Number(localStorage.getItem('count')) + 1); //счетчик в локал увеличивается
+          window.scrollTo(0,document.body.scrollHeight);
         } else {
           localStorage.removeItem(objNewData.id); //удаляем из локал этот объект
           updateLocalStorage(objNewData); //меняем содержимое локал
@@ -94,10 +97,12 @@
   });
 
   delAllButton.addEventListener('click', function () { //при нажатии "Очистить хранилище", из локал и таблицы удаляются все данные
-    localStorage.clear();
-    Array.prototype.slice.call(tbody.children).forEach(function (item) {
-      item.parentNode.removeChild(item);
-    })
+    if (confirm("Локальное хранилище будет очищено, все данные из таблицы будут удалены. При перезагрузке страницы данные будут загружены заново. Продолжить?")) {
+      localStorage.clear();
+      Array.prototype.slice.call(tbody.children).forEach(function (item) {
+        item.parentNode.removeChild(item);
+      })
+    }
   })
 
 })();
@@ -144,5 +149,5 @@ function blinkAnimation(row) { //мигает зеленым
   row.classList.add('newBlinkRow');
   setTimeout(function () {
     row.classList.remove('newBlinkRow')
-  },2000)
+  }, 2000)
 }

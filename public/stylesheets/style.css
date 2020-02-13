@@ -29,10 +29,14 @@ body {
   margin: auto;
 }
 
-thead th:not(:last-of-type),
+thead th,
 td,
 tfoot th {
   border: 2px solid #85c8ed;
+}
+
+td {
+  min-width: 35%;
 }
 
 th,
@@ -45,11 +49,11 @@ thead th:first-child {
   border-top-left-radius: 20px;
 }
 
-thead th:nth-last-child(2) {
+thead th:last-child {
   border-top-right-radius: 20px;
 }
 
-thead th:not(:last-of-type) {
+thead th {
   background-color: #85c8ed;
 }
 
@@ -65,8 +69,7 @@ tr:hover > td {
 }
 
 /* Кнопки */
-button,
-input {
+button {
   cursor: pointer;
 }
 
@@ -144,6 +147,7 @@ tr:hover > .deleteButton {
   margin: 1em;
 }
 
+/**/
 .error {
   box-shadow: #c22118 0 0 50px;
   color: #c22118;
