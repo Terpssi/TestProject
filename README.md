@@ -13,7 +13,7 @@ npm install
 3) Запустить json-server в одном терминале на порту 3001
 
 ```
-json-server --watch lpu.json -p=3001
+npx json-server --watch lpu.json -p=3001
 ```
 
 4) В другом терминале снова перейти в папку с проектом и запустить приложение
